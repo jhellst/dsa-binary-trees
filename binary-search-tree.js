@@ -12,7 +12,7 @@ class Node {
 
   findRecursively(val) {
 
-    if (this.val === val){
+    if (this.val === val) {
       return this;
     }
 
@@ -57,21 +57,43 @@ class Node {
   * Returns an array of visited nodes. */
 
   dfsPreOrder() {
+    if (!this) return [];
 
+    let nodes = [this.val];
+    if (this.left) nodes = nodes.concat(this.left.dfsPreOrder());
+    if (this.right) nodes = nodes.concat(this.right.dfsPreOrder());
+
+    return nodes;
   }
 
   /** dfsInOrder(): Traverse from the invoking node using in-order DFS.
   * Returns an array of visited nodes. */
 
   dfsInOrder() {
+    if (!this) return [];
 
+    let nodes = [];
+
+    if (this.left) nodes = nodes.concat(this.left.dfsInOrder());
+    nodes.push(this.val);
+    if (this.right) nodes = nodes.concat(this.right.dfsInOrder());
+
+    return nodes;
   }
 
   /** dfsPostOrder(): Traverse from the invoking node using post-order DFS.
   * Returns an array of visited nodes. */
 
   dfsPostOrder() {
+    if (!this) return [];
 
+    let nodes = [];
+
+    if (this.left) nodes = nodes.concat(this.left.dfsPostOrder());
+    if (this.right) nodes = nodes.concat(this.right.dfsPostOrder());
+    nodes.push(this.val);
+
+    return nodes;
   }
 
 }
@@ -142,21 +164,21 @@ class BinarySearchTree {
     while (stack.length) {
       const current = stack.pop();
 
-      if (current.val === val){
+      if (current.val === val) {
         return current;
       }
       else {
-        if (current.val < val){
-          if(current.right){
-            stack.push(current.right)
+        if (current.val < val) {
+          if (current.right) {
+            stack.push(current.right);
           }
           else {
             return;
           }
         }
         else {
-          if(current.left){
-            stack.push(current.left)
+          if (current.left) {
+            stack.push(current.left);
           }
           else {
             return;
@@ -181,28 +203,46 @@ class BinarySearchTree {
    * Returns an array of visited nodes. */
 
   dfsPreOrder() {
-
+    if (!this.root) return [];
+    return this.root.dfsPreOrder();
   }
 
   /** dfsInOrder(): Traverse the BST using in-order DFS.
    * Returns an array of visited nodes. */
 
   dfsInOrder() {
-
+    if (!this.root) return [];
+    return this.root.dfsInOrder();
   }
 
   /** dfsPostOrder(): Traverse the BST using post-order DFS.
    * Returns an array of visited nodes. */
 
   dfsPostOrder() {
-
+    if (!this.root) return [];
+    return this.root.dfsPostOrder();
   }
 
   /** bfs(): Traverse the BST using BFS.
    * Returns an array of visited nodes. */
 
   bfs() {
+    if (!this.root) {
+      return [];
+    }
 
+    let results = [];
+    const queue = [this.root];
+
+    while (queue.length) {
+      let current = queue.shift();
+      results.push(current.val);
+
+      if (current.left) queue.push(current.left);
+      if (current.right) queue.push(current.right);
+    }
+
+    return results;
   }
 
   /** findSuccessorNode(node): Find and return node with next largest value.
