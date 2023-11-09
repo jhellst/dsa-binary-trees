@@ -257,6 +257,26 @@ class BinarySearchTree {
    * Returns the removed node. */
 
   remove(val) {
+    if (!this.root) return null;
+    if (!this.root.findRecursively(val)) return null;
+
+    const stack = [this.root];
+
+    while (stack.length){
+      const current = stack.pop();
+      if(val === current.val){
+        //handles grabbing children to pass to this.parent
+      }
+      else {
+        if (val < current.val){
+          stack.push(this.left)
+        }
+        else {
+          stack.push(this.right)
+        }
+      }
+    }
+
 
   }
 }
